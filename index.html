@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Holi 🌈</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+background:black;
+color:white;
+}
+
+/* Background Slider */
+
+.slider{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-2;
+}
+
+/* Floating Bottom Button */
+
+.floating-btn{
+position:fixed;
+bottom:25px;
+right:25px;
+padding:10px 18px;
+font-size:14px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff4081,#ff9800);
+color:white;
+cursor:pointer;
+box-shadow:0 4px 15px rgba(0,0,0,0.3);
+transition:0.3s ease;
+z-index:1000;
+}
+
+.floating-btn:hover{
+transform:scale(1.1);
+box-shadow:0 6px 25px rgba(255,64,129,0.6);
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transition:1.5s ease-in-out;
+}
+
+.slide.active{
+opacity:1;
+}
+
+/* Holi Color Overlay */
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background: radial-gradient(circle at center, rgba(255,0,150,0.3), rgba(0,200,255,0.3), rgba(255,200,0,0.3));
+mix-blend-mode:screen;
+animation: moveColors 8s infinite alternate ease-in-out;
+z-index:-1;
+}
+
+@keyframes moveColors{
+0%{transform:scale(1);}
+100%{transform:scale(1.2);}
+}
+
+/* Center Content */
+
+.content{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+
+background: rgba(255, 255, 255, 0.08);   /* light transparency */
+border-radius:25px;
+padding:60px;
+
+/* Strong visible glass effect */
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+
+border:1px solid rgba(249, 249, 249, 0.3);
+box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+h1{
+font-size:50px;
+margin-bottom:20px;
+color:#fff;
+}
+
+p{
+font-size:20px;
+margin-bottom:25px;
+}
+
+button{
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:#ff4081;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #ff4081;
+}
+
+/* Splash Particles */
+
+.splash{
+position:absolute;
+width:15px;
+height:15px;
+border-radius:50%;
+pointer-events:none;
+animation:splashAnim 1s ease-out forwards;
+}
+
+@keyframes splashAnim{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(5) translate(var(--x),var(--y));opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="slider">
+<div class="slide active" style="background-image:url('image/image1.png')"></div>
+<div class="slide" style="background-image:url('image/image2.png')"></div>
+<div class="slide" style="background-image:url('image/image3.png')"></div>
+</div>
+
+<div class="overlay"></div>
+
+<div class="content">
+<h1>Happy Holi My Dear Garima ji 🌈</h1>
+<p>Like these colors, my life shines brighter with you ✨</p>
+<button onclick="burst()">Splash Colors 🎨</button>
+</div>
+
+<script>
+
+    function goToPage(){
+window.location.href = "second.html";
+}
+
+/* Background Slider */
+let slides=document.querySelectorAll('.slide');
+let index=0;
+
+setInterval(()=>{
+slides[index].classList.remove('active');
+index=(index+1)%slides.length;
+slides[index].classList.add('active');
+},4000);
+
+/* Splash Effect */
+function burst(){
+for(let i=0;i<40;i++){
+let splash=document.createElement('div');
+splash.classList.add('splash');
+
+let colors=['#ff4081','#ffeb3b','#00e5ff','#69f0ae','#ff5722','#7c4dff'];
+splash.style.background=colors[Math.floor(Math.random()*colors.length)];
+
+splash.style.left='50%';
+splash.style.top='50%';
+
+let x=(Math.random()-0.5)*800+'px';
+let y=(Math.random()-0.5)*600+'px';
+
+splash.style.setProperty('--x',x);
+splash.style.setProperty('--y',y);
+
+document.body.appendChild(splash);
+
+setTimeout(()=>splash.remove(),1000);
+}
+}
+
+/* Click Anywhere Splash */
+document.addEventListener('click',(e)=>{
+for(let i=0;i<15;i++){
+let splash=document.createElement('div');
+splash.classList.add('splash');
+let colors=['#ff4081','#ffeb3b','#00e5ff','#69f0ae','#ff5722','#7c4dff'];
+splash.style.background=colors[Math.floor(Math.random()*colors.length)];
+splash.style.left=e.clientX+'px';
+splash.style.top=e.clientY+'px';
+
+let x=(Math.random()-0.5)*300+'px';
+let y=(Math.random()-0.5)*300+'px';
+
+splash.style.setProperty('--x',x);
+splash.style.setProperty('--y',y);
+
+document.body.appendChild(splash);
+setTimeout(()=>splash.remove(),1000);
+}
+});
+
+</script>
+
+<button class="floating-btn" onclick="goToPage()">
+More ✨
+</button>
+
+</body>
+</html>
